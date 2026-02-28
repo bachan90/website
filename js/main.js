@@ -84,7 +84,7 @@ fadeSections.forEach(function (section) {
 
     var project = card.dataset.project;
     if (!(project in projectOffsets)) {
-      projectOffsets[project] = offsetCounter * 1000;
+      projectOffsets[project] = offsetCounter * 2000;
       offsetCounter++;
     }
 
@@ -106,6 +106,10 @@ fadeSections.forEach(function (section) {
   var startX = 0;
   var scrollStart = 0;
   var halfWidth = 0;
+  var velocity = 0;
+  var lastX = 0;
+  var lastTime = 0;
+  var friction = 0.95;
 
   function updateHalfWidth() {
     halfWidth = track.scrollWidth / 2;
@@ -121,7 +125,13 @@ fadeSections.forEach(function (section) {
 
   function autoScroll() {
     if (!isDragging) {
-      scrollPos += autoSpeed;
+      if (Math.abs(velocity) > 0.5) {
+        scrollPos += velocity;
+        velocity *= friction;
+      } else {
+        velocity = 0;
+        scrollPos += autoSpeed;
+      }
       wrapPosition();
       track.style.transform = 'translateX(' + (-scrollPos) + 'px)';
     }
@@ -130,13 +140,23 @@ fadeSections.forEach(function (section) {
 
   function startDrag(x) {
     isDragging = true;
+    velocity = 0;
     startX = x;
+    lastX = x;
+    lastTime = Date.now();
     scrollStart = scrollPos;
     carousel.style.cursor = 'grabbing';
   }
 
   function moveDrag(x) {
     if (!isDragging) return;
+    var now = Date.now();
+    var dt = now - lastTime;
+    if (dt > 0) {
+      velocity = (lastX - x) / dt * 16;
+    }
+    lastX = x;
+    lastTime = now;
     var diff = startX - x;
     scrollPos = scrollStart + diff;
     wrapPosition();
