@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" class="scroll-smooth">
+<html lang="pl" class="scroll-smooth snap-y snap-mandatory" style="overflow-y: scroll; scroll-behavior: smooth;">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -130,7 +130,7 @@
   </nav>
 
   <!-- ==================== HERO ==================== -->
-  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden snap-start">
     <!-- Background -->
     <div class="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
       <!-- Decorative pattern overlay -->
@@ -142,7 +142,7 @@
       <!-- Decorative line -->
       <div class="flex items-center justify-center gap-4 mb-6">
         <div class="w-12 h-px bg-gold-400"></div>
-        <span class="text-gold-400 font-medium tracking-widest uppercase text-sm">Profesjonalizm & Doświadczenie</span>
+        <span class="text-gold-400 font-medium tracking-widest uppercase text-sm">Profesjonalizm i Doświadczenie</span>
         <div class="w-12 h-px bg-gold-400"></div>
       </div>
 
@@ -177,8 +177,20 @@
   </section>
 
   <!-- ==================== O MNIE (ABOUT) ==================== -->
-  <section id="o-mnie" class="py-20 md:py-28 bg-white">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="o-mnie" class="py-20 md:py-28 bg-white min-h-screen flex items-center snap-start">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <!-- Section Header -->
+      <div class="section-fade text-center mb-12">
+        <div class="flex items-center justify-center gap-3 mb-4">
+          <div class="w-10 h-px bg-gold-400"></div>
+          <span class="text-gold-500 font-medium tracking-wider uppercase text-sm">O mnie</span>
+          <div class="w-10 h-px bg-gold-400"></div>
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-heading font-bold text-navy-800">
+          Doświadczony kierownik budowy z pasją do perfekcji
+        </h2>
+      </div>
+
       <div class="section-fade grid md:grid-cols-2 gap-12 lg:gap-16 items-center">
         <!-- Photo Placeholder -->
         <div class="relative">
@@ -194,19 +206,10 @@
 
         <!-- Bio Content -->
         <div>
-          <div class="flex items-center gap-3 mb-4">
-            <div class="w-10 h-px bg-gold-400"></div>
-            <span class="text-gold-500 font-medium tracking-wider uppercase text-sm">O mnie</span>
-          </div>
-
-          <h2 class="text-3xl sm:text-4xl font-heading font-bold text-navy-800 mb-6">
-            Doświadczony kierownik budowy z pasją do perfekcji
-          </h2>
-
           <p class="text-gray-600 leading-relaxed mb-6 text-justify">
             Z budownictwem i nadzorem technologicznym jestem związany od ponad 10 lat. Jako inżynier z uprawnieniami konstrukcyjno-budowlanymi, czuwam nad realizacją budynków mieszkalnych, hal oraz obiektów użyteczności publicznej. Moim celem jest zapewnienie Państwu bezpieczeństwa i spokoju ducha.
           </p>
-          <p class="text-gray-600 leading-relaxed mb-8 text-justify">
+          <p class="text-gray-600 leading-relaxed text-justify">
             Dzięki bogatemu doświadczeniu skutecznie wykrywam błędy wykonawcze, zanim staną się kosztownym problemem. Działam rzetelnie i z pełnym zaangażowaniem, chroniąc Państwa inwestycję przed nieplanowanymi wydatkami. Zapraszam do współpracy!
           </p>
         </div>
@@ -215,8 +218,8 @@
   </section>
 
   <!-- ==================== USŁUGI (SERVICES) ==================== -->
-  <section id="uslugi" class="py-20 md:py-28 bg-navy-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="uslugi" class="py-20 md:py-28 bg-navy-50 min-h-screen flex items-center snap-start">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Section Header -->
       <div class="section-fade text-center mb-16">
         <div class="flex items-center justify-center gap-3 mb-4">
@@ -292,7 +295,8 @@
   </section>
 
   <!-- ==================== REALIZACJE (PROJECTS) ==================== -->
-  <section id="realizacje" class="py-20 md:py-28 bg-white overflow-hidden">
+  <section id="realizacje" class="py-20 md:py-28 bg-white overflow-hidden min-h-screen flex items-center snap-start">
+    <div class="w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
       <div class="section-fade text-center mb-12">
@@ -377,11 +381,12 @@
 
       </div>
     </div>
+    </div>
   </section>
 
   <!-- ==================== KONTAKT (CONTACT) ==================== -->
-  <section id="kontakt" class="py-14 md:py-20 bg-navy-50">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+  <section id="kontakt" class="py-14 md:py-20 bg-navy-50 min-h-screen flex items-center snap-start">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Section Header -->
       <div class="section-fade text-center mb-10">
         <div class="flex items-center justify-center gap-3 mb-3">
@@ -508,7 +513,7 @@
   </section>
 
   <!-- ==================== FOOTER ==================== -->
-  <footer class="bg-navy-900 text-white py-12">
+  <footer class="bg-navy-900 text-white py-12 snap-start">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-3 gap-8 mb-8">
         <!-- Brand -->
