@@ -64,6 +64,115 @@ fadeSections.forEach(function (section) {
   fadeObserver.observe(section);
 });
 
+// ==================== CAROUSEL ====================
+(function () {
+  var carousel = document.getElementById('carousel');
+  var track = document.getElementById('carousel-track');
+  if (!carousel || !track) return;
+
+  // Duplicate all cards for seamless loop
+  var cards = track.innerHTML;
+  track.innerHTML = cards + cards;
+
+  // Image fade cycling for cards with multiple images
+  var projectOffsets = {};
+  var offsetCounter = 0;
+
+  track.querySelectorAll('.carousel-card').forEach(function (card) {
+    var imgs = card.querySelectorAll('.carousel-img');
+    if (imgs.length <= 1) return;
+
+    var project = card.dataset.project;
+    if (!(project in projectOffsets)) {
+      projectOffsets[project] = offsetCounter * 1000;
+      offsetCounter++;
+    }
+
+    var cardImgs = Array.from(imgs);
+    var current = 0;
+
+    setTimeout(function () {
+      setInterval(function () {
+        cardImgs[current].style.opacity = '0';
+        current = (current + 1) % cardImgs.length;
+        cardImgs[current].style.opacity = '1';
+      }, 5000);
+    }, projectOffsets[project]);
+  });
+
+  var autoSpeed = 0.5;
+  var scrollPos = 0;
+  var isDragging = false;
+  var startX = 0;
+  var scrollStart = 0;
+  var halfWidth = 0;
+
+  function updateHalfWidth() {
+    halfWidth = track.scrollWidth / 2;
+  }
+
+  function wrapPosition() {
+    if (scrollPos >= halfWidth) {
+      scrollPos -= halfWidth;
+    } else if (scrollPos < 0) {
+      scrollPos += halfWidth;
+    }
+  }
+
+  function autoScroll() {
+    if (!isDragging) {
+      scrollPos += autoSpeed;
+      wrapPosition();
+      track.style.transform = 'translateX(' + (-scrollPos) + 'px)';
+    }
+    requestAnimationFrame(autoScroll);
+  }
+
+  function startDrag(x) {
+    isDragging = true;
+    startX = x;
+    scrollStart = scrollPos;
+    carousel.style.cursor = 'grabbing';
+  }
+
+  function moveDrag(x) {
+    if (!isDragging) return;
+    var diff = startX - x;
+    scrollPos = scrollStart + diff;
+    wrapPosition();
+    track.style.transform = 'translateX(' + (-scrollPos) + 'px)';
+  }
+
+  function endDrag() {
+    if (!isDragging) return;
+    isDragging = false;
+    carousel.style.cursor = 'grab';
+  }
+
+  // Mouse events
+  carousel.addEventListener('mousedown', function (e) {
+    e.preventDefault();
+    startDrag(e.clientX);
+  });
+  window.addEventListener('mousemove', function (e) {
+    moveDrag(e.clientX);
+  });
+  window.addEventListener('mouseup', endDrag);
+
+  // Touch events
+  carousel.addEventListener('touchstart', function (e) {
+    startDrag(e.touches[0].clientX);
+  }, { passive: true });
+  carousel.addEventListener('touchmove', function (e) {
+    moveDrag(e.touches[0].clientX);
+  }, { passive: true });
+  carousel.addEventListener('touchend', endDrag);
+
+  updateHalfWidth();
+  window.addEventListener('resize', updateHalfWidth);
+  requestAnimationFrame(autoScroll);
+})();
+
 // ==================== CURRENT YEAR IN FOOTER ====================
 document.getElementById('current-year').textContent = new Date().getFullYear();
 
