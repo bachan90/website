@@ -176,18 +176,7 @@ fadeSections.forEach(function (section) {
 // ==================== CURRENT YEAR IN FOOTER ====================
 document.getElementById('current-year').textContent = new Date().getFullYear();
 
-// ==================== EMAILJS CONTACT FORM ====================
-// Configure these with your EmailJS credentials:
-// 1. Sign up at https://www.emailjs.com/
-// 2. Create an email service and template
-// 3. Replace the placeholder values below
-var EMAILJS_PUBLIC_KEY = 'YOUR_PUBLIC_KEY';
-var EMAILJS_SERVICE_ID = 'YOUR_SERVICE_ID';
-var EMAILJS_TEMPLATE_ID = 'YOUR_TEMPLATE_ID';
-
-// Initialize EmailJS (uncomment when credentials are configured)
-// emailjs.init(EMAILJS_PUBLIC_KEY);
-
+// ==================== WEB3FORMS CONTACT FORM ====================
 var contactForm = document.getElementById('contact-form');
 var submitBtn = document.getElementById('submit-btn');
 var formStatus = document.getElementById('form-status');
@@ -205,27 +194,23 @@ function showStatus(message, isSuccess) {
 contactForm.addEventListener('submit', function (e) {
   e.preventDefault();
 
-  // Check if EmailJS is configured
-  if (EMAILJS_PUBLIC_KEY === 'YOUR_PUBLIC_KEY') {
-    showStatus('Formularz kontaktowy zostanie aktywowany wkrótce. Proszę o kontakt telefoniczny lub mailowy.', false);
-    return;
-  }
-
-  // Disable button during submission
   submitBtn.disabled = true;
   submitBtn.querySelector('span').textContent = 'Wysyłanie...';
 
-  var templateParams = {
-    from_name: document.getElementById('name').value,
-    from_email: document.getElementById('email').value,
-    phone: document.getElementById('phone').value,
-    message: document.getElementById('message').value
-  };
+  var formData = new FormData(contactForm);
 
-  emailjs.send(EMAILJS_SERVICE_ID, EMAILJS_TEMPLATE_ID, templateParams)
-    .then(function () {
-      showStatus('Wiadomość została wysłana pomyślnie! Skontaktuję się wkrótce.', true);
-      contactForm.reset();
+  fetch('https://api.web3forms.com/submit', {
+    method: 'POST',
+    body: formData
+  })
+    .then(function (res) { return res.json(); })
+    .then(function (data) {
+      if (data.success) {
+        showStatus('Wiadomość została wysłana pomyślnie! Skontaktuję się wkrótce.', true);
+        contactForm.reset();
+      } else {
+        showStatus('Wystąpił błąd podczas wysyłania. Spróbuj ponownie lub skontaktuj się telefonicznie.', false);
+      }
     })
     .catch(function () {
       showStatus('Wystąpił błąd podczas wysyłania. Spróbuj ponownie lub skontaktuj się telefonicznie.', false);

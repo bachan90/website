@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" class="scroll-smooth snap-y snap-mandatory" style="overflow-y: scroll; scroll-behavior: smooth;">
+<html lang="pl" class="scroll-smooth">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -55,8 +55,6 @@
     }
   </script>
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
 
   <style>
     body {
@@ -130,7 +128,7 @@
   </nav>
 
   <!-- ==================== HERO ==================== -->
-  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden snap-start">
+  <section id="hero" class="relative min-h-screen flex items-center justify-center overflow-hidden">
     <!-- Background -->
     <div class="absolute inset-0 bg-gradient-to-br from-navy-900 via-navy-800 to-navy-700">
       <!-- Decorative pattern overlay -->
@@ -177,7 +175,7 @@
   </section>
 
   <!-- ==================== O MNIE (ABOUT) ==================== -->
-  <section id="o-mnie" class="py-20 md:py-28 bg-white min-h-screen flex items-center snap-start">
+  <section id="o-mnie" class="py-20 md:py-28 bg-white min-h-screen flex items-center">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Section Header -->
       <div class="section-fade text-center mb-12">
@@ -218,7 +216,7 @@
   </section>
 
   <!-- ==================== USŁUGI (SERVICES) ==================== -->
-  <section id="uslugi" class="py-20 md:py-28 bg-navy-50 min-h-screen flex items-center snap-start">
+  <section id="uslugi" class="py-20 md:py-28 bg-navy-50 min-h-screen flex items-center">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Section Header -->
       <div class="section-fade text-center mb-16">
@@ -287,7 +285,7 @@
           </div>
           <h3 class="text-lg font-heading font-bold text-navy-800 mb-3 text-center">Przeglądy budynków</h3>
           <p class="text-gray-600 text-sm leading-relaxed">
-            Przeprowadzam wymagane prawem kontrole stanu technicznego budynku - sprawdzam konstrukcję, instalacje i bezpieczeństwo użytkowania.
+            Przeprowadzam wymagane prawem kontrole stanu technicznego budynku - sprawdzam konstrukcję, bezpieczeństwo i utrzymanie obiektu w dobrym stanie.
           </p>
         </div>
       </div>
@@ -295,7 +293,7 @@
   </section>
 
   <!-- ==================== REALIZACJE (PROJECTS) ==================== -->
-  <section id="realizacje" class="py-20 md:py-28 bg-white overflow-hidden min-h-screen flex items-center snap-start">
+  <section id="realizacje" class="py-20 md:py-28 bg-white overflow-hidden min-h-screen flex items-center">
     <div class="w-full">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Section Header -->
@@ -385,7 +383,7 @@
   </section>
 
   <!-- ==================== KONTAKT (CONTACT) ==================== -->
-  <section id="kontakt" class="py-14 md:py-20 bg-navy-50 min-h-screen flex items-center snap-start">
+  <section id="kontakt" class="py-14 md:py-20 bg-navy-50 min-h-screen flex items-center">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
       <!-- Section Header -->
       <div class="section-fade text-center mb-10">
@@ -465,7 +463,8 @@
         <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-gray-100">
           <h3 class="text-lg font-heading font-bold text-navy-800 mb-4">Wyślij wiadomość</h3>
 
-          <form id="contact-form" class="space-y-3">
+          <form id="contact-form" action="https://api.web3forms.com/submit" method="POST" class="space-y-3">
+            <input type="hidden" name="access_key" value="50c3bcef-2e27-4436-b2f6-7cd86ac809cc">
             <div class="grid sm:grid-cols-2 gap-3">
               <div>
                 <label for="name" class="block text-sm font-medium text-gray-700 mb-1">Imię i nazwisko</label>
@@ -513,7 +512,7 @@
   </section>
 
   <!-- ==================== FOOTER ==================== -->
-  <footer class="bg-navy-900 text-white py-12 snap-start">
+  <footer class="bg-navy-900 text-white py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="grid md:grid-cols-3 gap-8 mb-8">
         <!-- Brand -->
@@ -534,6 +533,7 @@
             <li><a href="#uslugi" class="text-navy-300 hover:text-white transition-colors text-sm">Usługi</a></li>
             <li><a href="#realizacje" class="text-navy-300 hover:text-white transition-colors text-sm">Realizacje</a></li>
             <li><a href="#kontakt" class="text-navy-300 hover:text-white transition-colors text-sm">Kontakt</a></li>
+            <li><a href="https://www.oferteo.pl/m-bach-michal-bachanowicz/firma/7203935" target="_blank" rel="noopener noreferrer" class="text-navy-300 hover:text-white transition-colors text-sm">Oferteo</a></li>
           </ul>
         </div>
 
