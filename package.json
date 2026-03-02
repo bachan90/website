@@ -1,0 +1,18 @@
+{
+  "name": "website",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "scripts": {
+    "build:css": "tailwindcss -c tailwind.config.js -i ./css/input.css -o ./css/styles.css --minify",
+    "convert:webp": "node scripts/convert-images-to-webp.js",
+    "build": "npm run convert:webp && npm run build:css"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.4.17"
+  }
+}
