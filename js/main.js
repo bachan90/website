@@ -64,6 +64,106 @@ fadeSections.forEach(function (section) {
   fadeObserver.observe(section);
 });
 
+// ==================== ANALYTICS EVENTS (GA4) ====================
+function trackEvent(eventName, params) {
+  if (typeof window.gtag !== 'function') return;
+  window.gtag('event', eventName, params || {});
+}
+
+function getPlacement(element) {
+  if (!element) return 'unknown';
+  if (element.closest('#hero')) return 'hero';
+  if (element.closest('#kontakt')) return 'kontakt';
+  if (element.closest('#navbar')) return 'navbar';
+  if (element.closest('#mobile-menu')) return 'mobile_menu';
+  if (element.closest('footer')) return 'footer';
+  return 'other';
+}
+
+function setupContactTracking() {
+  document.querySelectorAll('a[href^="tel:"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      trackEvent('contact', {
+        contact_type: 'phone',
+        placement: getPlacement(link)
+      });
+    });
+  });
+
+  document.querySelectorAll('a[href^="mailto:"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      trackEvent('contact', {
+        contact_type: 'email',
+        placement: getPlacement(link)
+      });
+    });
+  });
+}
+
+function setupCtaTracking() {
+  document.querySelectorAll('a[href="#kontakt"], a[href="#realizacje"]').forEach(function (link) {
+    link.addEventListener('click', function () {
+      var target = link.getAttribute('href') === '#kontakt' ? 'contact' : 'projects';
+      trackEvent('select_content', {
+        content_type: 'cta',
+        content_id: target + '_' + getPlacement(link),
+        placement: getPlacement(link)
+      });
+    });
+  });
+}
+
+function setupOutboundTracking() {
+  document.querySelectorAll('a[href^="http://"], a[href^="https://"]').forEach(function (link) {
+    try {
+      var url = new URL(link.href, window.location.href);
+      if (url.hostname === window.location.hostname) return;
+
+      link.addEventListener('click', function () {
+        trackEvent('click', {
+          outbound: true,
+          link_url: url.href,
+          link_domain: url.hostname,
+          placement: getPlacement(link)
+        });
+      });
+    } catch (_error) {
+      // Ignore malformed URLs.
+    }
+  });
+}
+
+function setupSectionViewTracking() {
+  var trackedSections = {};
+  var sectionIds = ['uslugi', 'realizacje', 'kontakt'];
+
+  var observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (!entry.isIntersecting) return;
+      var id = entry.target.id;
+      if (!id || trackedSections[id]) return;
+
+      trackedSections[id] = true;
+      trackEvent('section_view', {
+        section_id: id
+      });
+      observer.unobserve(entry.target);
+    });
+  }, {
+    threshold: 0.4
+  });
+
+  sectionIds.forEach(function (id) {
+    var section = document.getElementById(id);
+    if (section) observer.observe(section);
+  });
+}
+
+setupContactTracking();
+setupCtaTracking();
+setupOutboundTracking();
+setupSectionViewTracking();
+
 // ==================== CAROUSEL ====================
 (function () {
   var carousel = document.getElementById('carousel');
@@ -226,6 +326,11 @@ contactForm.addEventListener('submit', function (e) {
     .then(function (res) { return res.json(); })
     .then(function (data) {
       if (data.success) {
+        trackEvent('generate_lead', {
+          form_id: 'contact_form',
+          method: 'web3forms',
+          placement: 'kontakt'
+        });
         showStatus('Wiadomość została wysłana pomyślnie! Skontaktuję się wkrótce.', true);
         contactForm.reset();
       } else {
